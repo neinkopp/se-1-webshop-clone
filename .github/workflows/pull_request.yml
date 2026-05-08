@@ -69,7 +69,7 @@ jobs:
           echo "---" >> code-coverage-results.md
           echo "## 📊 Code Statistics" >> code-coverage-results.md
 
-          curl -sSL https://github.com/boyter/scc/releases/download/v3.3.5/scc-3.3.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+          curl -sSL https://github.com/boyter/scc/releases/download/v3.7.0/scc_Linux_x86_64.tar.gz| tar -xz
 
           echo '```' >> code-coverage-results.md
           ./scc --exclude-dir vendor,node_modules,storage,public/build --sort code >> code-coverage-results.md
