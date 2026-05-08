@@ -57,17 +57,29 @@ jobs:
           filename: coverage.xml
           badge: true
           format: markdown
-          hide_complexity: true # Macht die Tabelle für den PR-Kommentar übersichtlicher
+          hide_complexity: true
           output: both
 
-      # Der "Sticky Comment" Schritt
-      - name: Add Coverage PR Comment
+      - name: Generate Code Statistics (scc)
+        shell: bash
+        run: |
+          echo "---" >> code-coverage-results.md
+          echo "## 📊 Code Statistics" >> code-coverage-results.md
+
+          # Wir laden die Binärdatei kurz runter (schnellste Methode)
+          curl -sSL https://github.com/boyter/scc/releases/download/v3.3.5/scc-3.3.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+
+          echo '```' >> code-coverage-results.md
+          ./scc --exclude-dir vendor,node_modules,storage,public/build --sort code >> code-coverage-results.md
+          echo '
+          ```' >> code-coverage-results.md
+
+      - name: Add Coverage & Stats PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
         with:
           recreate: true
           path: code-coverage-results.md
 
-      # Optional: Trotzdem noch in die Job-Zusammenfassung schreiben
-      - name: Add Coverage Summary to Action
+      - name: Add Summary to Action
         run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
