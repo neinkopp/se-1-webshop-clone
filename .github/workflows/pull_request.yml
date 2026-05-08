@@ -45,11 +45,11 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
 
-      - name: Execute tests (Unit and Feature tests)
+      - name: Execute tests
         env:
           DB_CONNECTION: sqlite
-          DB_DATABASE: database/database.sqlite
-        run: php artisan test --coverage-clover=coverage.xml
+          DB_DATABASE: ":memory:"
+        run: php artisan test --coverage-clover=coverage.xml --min=0
 
       # 8. Code Coverage Summary erstellen und in GitHub Actions anzeigen
       - name: Code Coverage Report
@@ -57,7 +57,6 @@ jobs:
         with:
           filename: coverage.xml
           badge: true
-          fail_below_min: false
           format: markdown
           output: both
 
