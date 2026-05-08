@@ -51,6 +51,10 @@ jobs:
           DB_DATABASE: ":memory:"
         run: php artisan test --coverage-clover=coverage.xml --min=0
 
+      - name: "Debug: List files"
+        run: |
+          ls -la
+          find . -name "coverage.xml"
       # 8. Code Coverage Summary erstellen und in GitHub Actions anzeigen
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
