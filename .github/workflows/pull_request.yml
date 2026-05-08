@@ -63,10 +63,12 @@ jobs:
       - name: Generate Code Statistics (scc)
         shell: bash
         run: |
+          sudo chown $USER:$USER code-coverage-results.md
+
+          echo "" >> code-coverage-results.md
           echo "---" >> code-coverage-results.md
           echo "## 📊 Code Statistics" >> code-coverage-results.md
 
-          # Wir laden die Binärdatei kurz runter (schnellste Methode)
           curl -sSL https://github.com/boyter/scc/releases/download/v3.3.5/scc-3.3.5-x86_64-unknown-linux-gnu.tar.gz | tar -xz
 
           echo '```' >> code-coverage-results.md
