@@ -12,7 +12,7 @@ class ProductTest extends TestCase
      */
     public function test_it_can_render(): void
     {
-        Vite::fake();
+        $this->withoutVite();
         $contents = $this->view('product', [
             //
         ]);
